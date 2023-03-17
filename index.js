@@ -1,80 +1,48 @@
-let task1 = {name: "Sweep the floor", priority: "Low", status: false}
+const newTaskForm = document.querySelector('form')
 
-let task2 = {name: "Get groceries", priority: "Medium", status: true}
+let task1 = {name: 'Sweep the floor', priority: 'Low', status: false}
 
-let task3 = {name: "Make Dinner", priority: "High", status: false}
+let task2 = {name: 'Get groceries', priority: 'Medium', status: true}
 
+let task3 = {name: 'Make dinner', priority: 'High', status: false}
 
 let tasks = [task1, task2, task3]
 
+console.log(tasks)
 
-function addTask (task) {
-    tasks.push(task)
+const buildTasks = (tasks) => {
+  let tasksDisplay = document.getElementById('task-display')
+  tasksDisplay.innerHTML = ''
+
+  tasks.forEach((task) => {
+    let newTask = document.createElement('div')
+    newTask.classList.add('task')
+
+    newTask.innerHTML = `<input type="checkbox" class="task-completed"/>
+    <p class="task-name">${task.name}</p>
+    <p class="task-priority">${task.priority}</p>
+    <img
+      class='trash-can'
+      src='https://www.freeiconspng.com/thumbs/trash-can-icon/trash-can-icon-26.png'
+      alt='trash'
+    />`
+
+    tasksDisplay.appendChild(newTask)
+  })
 }
 
-// let addTask = task => {
-//     tasks.push(task)
-// }
+const addTask = (event) => {
+  event.preventDefault()
 
-addTask({name: 'Take out the trash', priority: "Medium", status: false})
+  const name = document.querySelector("#new-task-name")
+  const priority = document.querySelector("#new-task-priority")
 
-console.log(tasks)
+  const newTask = {name: name.value, priority: priority.value, status: false}
 
-// function deleteTask (task){
-//     for(let i = 0; i < tasks.length; i++) {
-//         if(tasks[i].name === task) {
-//             tasks.splice([i],1)
-//             console.log('Task deleted')
-//             return
-//         } 
-//     } console.log('that task was not in the array')
-// }
-
-const deleteTask = (task) => {
-    for(let i = 0; i < tasks.length; i++) {
-        if(tasks[i].name === task) {
-            tasks.splice([i],1)
-            console.log('Task deleted')
-            return
-        } 
-    } console.log('that task was not in the array')
+  tasks.push(newTask)
+  buildTasks(tasks)
 }
 
-deleteTask ('Take out the trash')
+newTaskForm.addEventListener('submit', addTask)
 
-console.log(tasks)
-
-
-
-// const incompleteTasks = tasks.filter((task) => {
-//     if(!task.status) {
-//         return true
-//     } else {
-//         return false
-//     }
-// })
-
-const incompleteTasks = tasks.filter((task) => !task.status)
-
-console.log(tasks)
-console.log(incompleteTasks)
-
-
-
-// if(task1 === "Make Dinner"){
-//     console.log('completed')
-// }else{
-//     console.log('incomplete')
-// }
-
-// for(let i = 0; i < tasks.length; i++) {
-//     let string = tasks[i]
-
-//     if(tasks[i] === 'Make dinner') {
-//         string += ' - Completed'
-//     } else {
-//         string += ' - Incomplete'
-//     }
-    
-//     console.log(string)
-// }
+buildTasks(tasks)
